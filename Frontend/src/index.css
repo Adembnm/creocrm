@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+/*****************************************************************/
+/***************************** FONTS *****************************/
+/*****************************************************************/
+@font-face {
+    font-family: "RobotoRegular";
+    src: local("RobotoRegular"), url("./fonts/Roboto/Roboto-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "CairoRegular";
+    src: local("CairoRegular"), url("./fonts/Cairo/Cairo-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Bravary";
+    src: local("Bravary"), url("./fonts/Bravary/Bravary.ttf") format("truetype");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Platino";
+    src: local("Platino"), url("./fonts/Platino/PalatinoLinotype.ttf") format("truetype");
+    font-weight: 500;
+}
+
+/*****************************************************************/
+/**************************** GLOBAL *****************************/
+/*****************************************************************/
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+body * {
+    font-family: "CairoRegular", sans-serif;
+}
+
+body.arabic * {
+    font-family: "CairoRegular", sans-serif;
+}
+  
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
