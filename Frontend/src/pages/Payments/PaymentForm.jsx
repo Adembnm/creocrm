@@ -125,7 +125,7 @@ const PaymentForm = (props) => {
     } else if (formData.date === '') {
       isValid = false;
       feedback = 'Please select a date';
-    } else if (formData.amount > 0) {
+    } else if (formData.amount < 0) {
       isValid = false;
       feedback = 'The amount is greater than the total ';
     } else if (formData.amount <= 0) {

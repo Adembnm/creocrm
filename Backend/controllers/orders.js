@@ -71,12 +71,8 @@ export const addOrder = async (req, res) => {
     const customer = await Customer.findById(newOrder.customer);
     //Build Ref
     newOrder.ref = Date.now().toString();
-    
-    
-  
     // Create Order
     const order = await Order.create(newOrder);
-
     // Save
     await customer.save()
     await order.save()
@@ -129,7 +125,7 @@ export const deleteOrder = async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const connectedUser = await User.findById(decoded.id);
     if (!connectedUser) return res.status(404).json({ message: "Unauthorized" });
-    //Create Event
+    
    
     // Archive Order
     await Order.findByIdAndUpdate(id, { status: 6, history: [...order.history, {
@@ -146,10 +142,7 @@ export const deleteOrder = async (req, res) => {
   }
 }
 
-//Accept Order
 
-
-//Reject Order
 
 
 //Get Customer orders

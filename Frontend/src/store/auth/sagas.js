@@ -24,43 +24,6 @@ export function* login({ payload }) {
   }
 }
 
-export function* forgetPassword({ payload }) {
-  try {
-    const response = yield call(API.forgetPassword, payload);
-    yield put(ACTIONS.forgetPasswordReceive(response.data));
-    dispatchSnackbarSuccess("success");
-  } catch (err) {
-    console.log(err.response.data);
-    dispatchSnackbarError(err.response?.data);
-  }
-}
-
-export function* resetPassword({ payload }) {
-  try {
-    const response = yield call(API.resetPassword, payload);
-    yield put(ACTIONS.resetPasswordReceive(response.data));
-    if (response?.status === 200) {
-      localStorage.setItem("reset_password", true);
-    }
-  } catch (err) {
-    console.log(err.response.data);
-    dispatchSnackbarError(err.response?.data);
-  }
-}
-
-export function* forcePassword({ payload }) {
-  try {
-    yield call(API.forcePassword, payload);
-    yield put(ACTIONS.forcePasswordReceive());
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    // dispatchSnackbarSuccess("success");
-  } catch (err) {
-    console.log(err?.response?.data);
-   // dispatchSnackbarError(err?.response?.data);
-  }
-}
-
 export function* getUser() {
   try {
     const response = yield call(API.getUser);
@@ -71,22 +34,10 @@ export function* getUser() {
   }
 }
 
-export function* logout() {
-  try {
-    yield put(ACTIONS.logoutReceive());
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-  } catch (err) {
-    console.log(err.response.data);
-    dispatchSnackbarError(err.response?.data);
-  }
-}
+
 
 export function* authSagas() {
   yield takeLatest(TYPES.LOGIN_REQUEST, login);
-  yield takeLatest(TYPES.FORGET_PASSWORD_REQUEST, forgetPassword);
-  yield takeLatest(TYPES.RESET_PASSWORD_REQUEST, resetPassword);
-  yield takeLatest(TYPES.FORCE_PASSWORD_REQUEST, forcePassword);
   yield takeLatest(TYPES.GET_USER_REQUEST, getUser);
-  yield takeLatest(TYPES.LOGOUT_REQUEST, logout);
+  
 }

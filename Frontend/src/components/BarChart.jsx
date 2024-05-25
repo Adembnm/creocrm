@@ -61,15 +61,16 @@ function BarChart(props) {
             setChartData({
                 labels: labels,
                 datasets: [
-                    {
-                        label: `${t('total_payments')} ${year}`,
-                        backgroundColor: 'rgba(68, 183, 30, 0.5)',
-                        borderColor: 'rgba(68, 183, 30, 0.7)',
-                        borderWidth: 1,
-                        hoverBackgroundColor: 'rgba(68, 183, 30, 0.7)',
-                        hoverBorderColor: 'rgba(68, 183, 30, 0.7)',
-                        data: data,
-                    },
+                  {
+                    label: `${t('total_payments')} ${year}`,
+                    backgroundColor: 'rgba(255, 0, 0, 0.5)', // Rouge avec transparence à 50%
+                    borderColor: 'rgba(255, 0, 0, 0.7)', // Rouge avec transparence à 70%
+                    borderWidth: 1,
+                    hoverBackgroundColor: 'rgba(255, 0, 0, 0.7)', // Rouge avec transparence à 70% pour le survol
+                    hoverBorderColor: 'rgba(255, 0, 0, 0.7)', // Rouge avec transparence à 70% pour la bordure en survol
+                    data: data,
+                  },
+                  
                     
                     
                 ]

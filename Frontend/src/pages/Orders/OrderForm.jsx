@@ -160,10 +160,7 @@ const OrderForm = (props) => {
           ...item,
           inputValue: item.name,
         })),
-        projectName: order.project?.name,
-        projectDeadline: order.project?.deadline,
-        projectNotes: order.project?.notes,
-        rejectionReason: order.rejectionReason,
+        
         payment: false,
         paymentDate: '',
         paymentAmount: 0,
@@ -205,7 +202,7 @@ const OrderForm = (props) => {
       setFeedback('Please enter at least one item');
       isValid = false;
     }
-    //Projects Validation
+    
     
     // Customer Validation
     if (formData.customer.length === 0) {

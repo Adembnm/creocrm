@@ -1,12 +1,6 @@
 import bcrypt from "bcryptjs";
 import User from "../models/user.js";
 import jwt from "jsonwebtoken";
-import Customer from "../models/customer.js";
-import Order from "../models/order.js";
-import Payment from "../models/payment.js";
-import Service from "../models/service.js";
-import Appointment from "../models/appointment.js";
-
 
 
 //Get Users
@@ -153,50 +147,3 @@ export const getStatistics = async (req, res) => {
   }
 }
 
-//Seed Users
-export const seedUsers = async (req, res) => {
-  const users = [
-    {
-      name: "Maamoun Grissa",
-      email: "grissa.maamoun@gmail.com",
-      password: "Grissa1906",
-      phone: "+21650870256",
-      role: 1,
-      avatar: "https://www.maamoungrissa.me/img/Profile.83f35c36.jpg",
-    },
-    {
-      name: "Bilel",
-      email: "grissabilel@gmail.com",
-      password: "Bilel1906",
-      phone: "+33658970952",
-      role: 1,
-      avatar: "https://scontent.ftun14-1.fna.fbcdn.net/v/t39.30808-6/275384708_2836126050020243_6026312772215050184_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=hnRi9pWWE-gAX83TlzJ&_nc_ht=scontent.ftun14-1.fna&oh=00_AT-5l1XP81dw3UoTmk0HaVmVApW0Coi0i8V_eGJI_ewU2w&oe=62D991A6",
-    },
-  ];
-
-  try {
-    await User.deleteMany({});
-    await Customer.deleteMany({});
-    await Order.deleteMany({});
-    await Service.deleteMany({});
-    await Payment.deleteMany({});
-    await Appointment.deleteMany({});
-
-    users.forEach(async (user) => {
-      const hashedPassword = await bcrypt.hash(user.password, 8);
-      await User.create({
-        name: user.name,
-        email: user.email,
-        password: hashedPassword,
-        phone: user.phone,
-        role: user.role,
-        avatar: user.avatar,
-      });
-    }
-    );
-    res.status(201).json({ message: "Users created successfully." });
-  } catch (error) {
-    res.status(500).json({ message: "Something went wrong" });
-    console.log(error);
-  }
-}

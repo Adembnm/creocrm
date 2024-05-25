@@ -64,6 +64,15 @@ const AppointmentForm = (props) => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appointment, listCustomers]);
+  const validateDate = (date) => {
+    const selectedDate = moment(date);
+    const currentDate = moment();
+    if (selectedDate.isBefore(currentDate, 'minute')) {
+      setFeedback("La date du rendez-vous ne peut pas être dans le passé.");
+      return currentDate.format('YYYY-MM-DDTHH:mm');
+    }
+    return date;
+  }
 
   const validation = () => {
     let isValid = true;
@@ -110,7 +119,7 @@ const AppointmentForm = (props) => {
                         required
                         className='w-full py-3 px-4 bg-slate-100 focus:outline-none rounded-none'
                         value={formData.date}
-                        onChange={(event) => setFormData({...formData, date: moment(event.target.value).format('YYYY-MM-DDTHH:mm')})}
+                        onChange={(event) =>  setFormData({ ...formData, date: validateDate(event.target.value) })}
                 />
             </div>
             <div className='w-full sm:w-1/2 px-4 mb-4 sm:mb-0'>

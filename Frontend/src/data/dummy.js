@@ -338,13 +338,7 @@ export const getUnits = [
   "Hour",
   "Day",
   "Month",
-  "Year",
-  "Piece",
-  "Kg",
-  "Litre",
-  "Meter",
-  "Meter2",
-  "Meter3",
+ 
 ]
 
 // Users Roles
