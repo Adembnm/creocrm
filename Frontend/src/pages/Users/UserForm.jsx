@@ -69,6 +69,12 @@ const UserForm = (props) => {
       setFeedBack('Please enter a phone number');
       isValid = false;
     }
+    
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(formData.email)) {
+      setFeedBack('invalid email format');
+      isValid = false;
+    }
     if (formData.email === '') {
       setFeedBack('Please enter an email');
       isValid = false;

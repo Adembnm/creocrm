@@ -34,9 +34,7 @@ const CustomerForm = (props) => {
     address: '',
     city: '',
     avatar: '',
-    status: 1,
-    rate: 0,
-    satisfaction: 3,
+    
     notes: '',
     source: 0,
   });
@@ -51,10 +49,7 @@ const CustomerForm = (props) => {
       address: '',
       city: '',
       avatar: '',
-      status: 1,
-      rate: 0,
-      satisfaction: 3,
-      notes: '',
+      
       source: 0,
     });
   };
@@ -76,9 +71,7 @@ const CustomerForm = (props) => {
         address: customer.address,
         city: customer.city,
         avatar: customer.avatar,
-        status: customer.status,
-        rate: customer.rate,
-        satisfaction: customer.satisfaction,
+        
         notes: customer.notes,
         source: customer.source,
       });
@@ -94,10 +87,16 @@ const CustomerForm = (props) => {
       setFeedback(t('phone_is_required'));
       isValid = false;
     }
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(formData.email)) {
+      setFeedback(t('invalid email format'));
+      isValid = false;
+    }
     if (formData.email.length < 3) {
       setFeedback(t('email_is_required'));
       isValid = false;
     }
+
     if (formData.name.length < 3) {
       setFeedback(t('name_is_required'));
       isValid = false;
