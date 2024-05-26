@@ -125,20 +125,20 @@ const PaymentForm = (props) => {
     } else if (formData.date === '') {
       isValid = false;
       feedback = 'Please select a date';
-    } else if (formData.amount < 0) {
+    } else if (parseFloat(formData.amount) <= 0) {
       isValid = false;
-      feedback = 'The amount is greater than the total ';
-    } else if (formData.amount <= 0) {
+      feedback = 'The amount should be greater than 0';
+    } else if (parseFloat(formData.amount) > parseFloat(order.total) - parseFloat(order.paid)) {
       isValid = false;
-      feedback = 'The amount should be greater than 0 ';
-    } else if (parseFloat(order.total) - (parseFloat(order.paid) + parseFloat(formData.amount)) < 0) {
-      isValid = false;
-      feedback = 'The amount is greater than the total amount';
+      feedback = 'The amount is greater than the total unpaid amount for this order';
     }
   
     setFeedback(feedback);
     return isValid;
   };
+  
+  
+  
   
   
   
@@ -153,8 +153,11 @@ const PaymentForm = (props) => {
           dispatch(createPaymentRequest(formData, navigate));
         }
       }
+      // Ajoutez la navigation ici après la soumission réussie du formulaire
+      navigate('/crm/payments');
     }
   };
+  
 
   if (user?.role > 1) {
     return <NotAuthorized />
