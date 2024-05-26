@@ -74,6 +74,9 @@ const Customers = () => {
                           style={{ color: currentColor }}
                           onClick={() => navigate("/crm/customers/add")} />
       </div>
+      <div className='flex justify-end items-center py-4'>
+        <input type="text" className="w-1/4 px-4 py-3 bg-gray-100 focus:outline-none" placeholder={t("search_by_customer")} value={payload.search} onChange={(e) => setPayload({ ...payload, search: e.target.value })} />
+      </div>
      
       <div className='table_container'>
         <table className='w-full rounded-md table-auto'>

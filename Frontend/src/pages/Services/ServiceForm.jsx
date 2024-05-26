@@ -22,7 +22,7 @@ const ServiceForm = (props) => {
     unit: 'Day',
     price: 0,
     tax: settingsData.company_services_tax_factor,
-    description: '',
+    description: '', 
   });
 
   const clearForm = () => {
@@ -36,6 +36,14 @@ const ServiceForm = (props) => {
       description: '',
     });
   }
+  const [formErrors, setFormErrors] = useState({
+    category: '',
+    name: '',
+    price: '',
+    tax: '',
+    description: '',
+  });
+  
 
   useEffect(() => {
     if (id) {
@@ -61,12 +69,32 @@ const ServiceForm = (props) => {
  
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (id) {
-      dispatch(updateServiceRequest(formData, navigate));
-    } else {
-      dispatch(createServiceRequest(formData, navigate));
+    const newErrors = {};
+    
+    if (!formData.category.trim()) {
+      newErrors.category = 'Category is required';
     }
-  }
+    if (!formData.name.trim()) {
+      newErrors.name = 'Service Name is required';
+    }
+    if (formData.price <= 0) {
+      newErrors.price = 'Unit Price must be greater than 0';
+    }
+    // Ajoutez d'autres validations pour les autres champs
+    
+    if (Object.keys(newErrors).length === 0) {
+      // Soumettre le formulaire si aucune erreur
+      if (id) {
+        dispatch(updateServiceRequest(formData, navigate));
+      } else {
+        dispatch(createServiceRequest(formData, navigate));
+      }
+    } else {
+      // Mettre à jour l'état des erreurs
+      setFormErrors(newErrors);
+    }
+  };
+  
 
   if (user?.role > 4) {
     return <NotAuthorized />
@@ -79,43 +107,47 @@ const ServiceForm = (props) => {
           <h3 className='mb-20 mx-auto text-center text-3xl font-bold dark:text-white text-slate-600' 
               style={{ color: currentColor }}>{id ? 'Edit' : 'Add'} Service</h3>
           <div className='flex flex-col sm:flex-row w-full mb-4'>
-            <div className='w-full sm:w-1/2 px-4 mb-4 sm:mb-0'>
-                <label htmlFor="category" className="text-sm dark:text-gray-200 text-gray-600 mb-2">Category<span className='text-red-600 ml-2'>*</span></label>
-                <input id="category"
-                        name="category"
-                        type="category"
-                        required
-                        className='w-full py-3 px-4 bg-slate-100 focus:outline-none rounded-none'
-                        value={formData.category}
-                        onChange={(event) => setFormData({...formData, category: event.target.value})}
-                />
-            </div>
-            <div className='w-full sm:w-1/2 px-4 mb-4 sm:mb-0'>
-                <label htmlFor="name" className="text-sm dark:text-gray-200 text-gray-600 mb-2">Service Name<span className='text-red-600 ml-2'>*</span></label>
-                <input id="name"
-                        name="name"
-                        type="text"
-                        required
-                        className='w-full py-3 px-4 bg-slate-100 focus:outline-none rounded-none'
-                        value={formData.name}
-                        onChange={(event) => setFormData({...formData, name: event.target.value})}
-                />
-            </div>
+          <div className='w-full sm:w-1/2 px-4 mb-4 sm:mb-0'>
+  <label htmlFor="category" className="text-sm dark:text-gray-200 text-gray-600 mb-2">Category<span className='text-red-600 ml-2'>*</span></label>
+  <input id="category"
+          name="category"
+          type="category"
+          required
+          className='w-full py-3 px-4 bg-slate-100 focus:outline-none rounded-none'
+          value={formData.category}
+          onChange={(event) => setFormData({...formData, category: event.target.value})}
+  />
+  {formErrors.category && <p className="text-red-500">{formErrors.category}</p>}
+</div>
+<div className='w-full sm:w-1/2 px-4 mb-4 sm:mb-0'>
+  <label htmlFor="name" className="text-sm dark:text-gray-200 text-gray-600 mb-2">Service Name<span className='text-red-600 ml-2'>*</span></label>
+  <input id="name"
+          name="name"
+          type="text"
+          required
+          className='w-full py-3 px-4 bg-slate-100 focus:outline-none rounded-none'
+          value={formData.name}
+          onChange={(event) => setFormData({...formData, name: event.target.value})}
+  />
+  {formErrors.name && <p className="text-red-500">{formErrors.name}</p>}
+</div>
           </div>
           <div className='flex flex-col sm:flex-row w-full mb-4'>
               <div className='w-full sm:w-1/2 px-2 mb-4 sm:mb-0'>
                 <div className='flex w-full'>
-                    <div className='w-2/3 px-2'>
-                      <label htmlFor="price" className="text-sm dark:text-gray-200 text-gray-600 mb-2">Unit Price<span className='text-red-600 ml-2'>*</span></label>
-                      <input id="price"
-                              name="price"
-                              type="number"
-                              required
-                              className='w-full py-3 px-4 bg-slate-100 focus:outline-none rounded-none'
-                              value={formData.price}
-                              onChange={(event) => setFormData({...formData, price: event.target.value})}
-                      />
-                    </div>
+                <div className='w-2/3 px-2'>
+  <label htmlFor="price" className="text-sm dark:text-gray-200 text-gray-600 mb-2">Unit Price<span className='text-red-600 ml-2'>*</span></label>
+  <input id="price"
+          name="price"
+          type="number"
+          required
+          className='w-full py-3 px-4 bg-slate-100 focus:outline-none rounded-none'
+          value={formData.price}
+          onChange={(event) => setFormData({...formData, price: event.target.value})}
+  />
+  {formErrors.price && <p className="text-red-500">{formErrors.price}</p>}
+</div>
+
                     <div className='w-1/3 px-2'>
                       <label htmlFor="unit" className="text-sm dark:text-gray-200 text-gray-600 mb-2">Unit</label>
                       <select id="unit"
