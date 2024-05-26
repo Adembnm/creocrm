@@ -4,10 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { getNextAppointmentRequest } from '../store/appointments/actions';
 //import { updateAppointmentRequest } from '../store/appointments/actions';
 import moment from 'moment';
+import NotAuthorized from '../components/NotAuthorized';
+
 import { useTranslation } from 'react-i18next';
 
 function NextAppointment() {
     const { t } = useTranslation();
+    const { user } = useSelector(state => state.auth);
     const dispatch = useDispatch();
     const { nextAppointment } = useSelector(state => state.appointments);
     //const { updateAppointment } = useSelector(state => state.appointments);
@@ -19,6 +22,9 @@ function NextAppointment() {
 
     } , [dispatch]);
     
+    if (user?.role > 1) {
+        return <NotAuthorized />
+      }
         
     return (
         <div className='w-full h-72 overflow-y-auto'>
