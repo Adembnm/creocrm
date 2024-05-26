@@ -20,7 +20,7 @@ import { MdAddCircleOutline } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { getUsersStatisticsRequest } from '../../store/users/actions';
-
+import Pie from '../Charts/Pie';
 
 const Home = () => {
   const { currentColor } = useStateContext();
@@ -28,7 +28,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
   const { user } = useSelector((state) => state.auth);
-  const { usersStatistics } = useSelector(state => state.users);
+  const { usersStatistics } = useSelector((state) => state.users);
   const { customersStatistics } = useSelector((state) => state.customers);
   const { ordersStatistics } = useSelector((state) => state.orders);
   //const [pieChartData, setPieChartData] = useState([]);
@@ -97,8 +97,7 @@ const Home = () => {
               {t('customers')}&nbsp;:&nbsp;{customersStatistics?.total || 0}
             </span>
             <div className="flex items-end">
-              <div className="w-4/5">                                             
-              </div>
+              <div className="w-4/5"></div>
               <div className="w-1/5">
                 <img
                   className="w-full h-auto"
@@ -134,11 +133,7 @@ const Home = () => {
               {t('orders')}&nbsp;:&nbsp;{ordersStatistics?.total || 0}
             </span>
             <div className="flex items-end">
-              <div className="w-4/5">
-              
-                
-                
-              </div>
+              <div className="w-4/5"></div>
               <div className="w-1/5">
                 <img
                   className="w-full h-auto"
@@ -157,7 +152,6 @@ const Home = () => {
               />
             </div>
           </div>
-          
         </div>
         <div className="w-full sm:w-1/3 mb-4 sm:mb-0">
           <div
@@ -210,10 +204,6 @@ const Home = () => {
         </div>
       </div>
 
-        
-        
-      
-
       <div className="mt-4 w-full flex flex-col sm:flex-row">
         <div className="w-full sm:w-2/3 mb-4 sm:mb-0">
           <div className="home-block mx-4 py-6 px-4 rounded-sm shadow-md transition-all duration-920 bg-slate-100 hover:bg-slate-200 dark:bg-slate-500 dark:hover:bg-slate-600">
@@ -237,7 +227,7 @@ const Home = () => {
       <div className="mt-4 w-full flex flex-col sm:flex-row">
         <div className="w-full sm:w-2/3 mb-4 sm:mb-0">
           <div className="home-block mx-4 py-6 px-4 rounded-sm shadow-md transition-all duration-800 bg-slate-100 hover:bg-slate-200 dark:bg-slate-500 dark:hover:bg-slate-600">
-          <BarChart data={ordersStatistics?.payments} />
+            <BarChart data={ordersStatistics?.payments} />
           </div>
         </div>
         <div className="w-full sm:w-1/3 mb-4 sm:mb-0">
@@ -248,8 +238,19 @@ const Home = () => {
         </div>
       </div>
 
-       
-    </div> 
+      <div className="mt-4 w-full flex flex-col sm:flex-row">
+        <div className="w-full sm:w-1/3 mb-4 sm:mb-0"></div>
+        <div className="w-full sm:w-1/3 mb-4 sm:mb-0"></div>
+        <div className="w-full sm:w-1/3 mb-4 sm:mb-0"></div>
+      </div>
+      <div className="mt- w-full flex flex-col sm:flex-row">
+        <div className="w-full lg:w-1/2 p-4">
+          <div className="dark:bg-slate-800 p-6 custom-chart-container mx-4 py-6 px-4 rounded-sm shadow-md transition-all duration-800 bg-slate-100 hover:bg-slate-200 dark:bg-slate-500 dark:hover:bg-slate-60">
+            <Pie pieChartData={usersStatistics} />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
