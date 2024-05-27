@@ -39,7 +39,7 @@ const PaymentForm = (props) => {
     date: moment().format('YYYY-MM-DD'),
     customer: '',
     order: '',
-    amount: 0,
+    amount: '',
     paymentMethod: 0,
     notes: '',
     closeProject: false,
@@ -125,6 +125,9 @@ const PaymentForm = (props) => {
     } else if (formData.date === '') {
       isValid = false;
       feedback = 'Please select a date';
+    } else if (formData.amount.trim() === '') {
+      isValid = false;
+      feedback = 'Please enter amount';
     } else if (parseFloat(formData.amount) <= 0) {
       isValid = false;
       feedback = 'The amount should be greater than 0';
