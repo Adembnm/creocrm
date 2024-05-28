@@ -17,6 +17,7 @@ import { getCustomerSources } from '../../data/dummy';
 import { useTranslation } from 'react-i18next';
 
 const CustomerForm = (props) => {
+  const today = new Date().toISOString().substring(0, 10);
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -27,6 +28,7 @@ const CustomerForm = (props) => {
   const [feedback, setFeedback] = useState(false);
   const [formData, setFormData] = useState({
     id: null,
+    birthDay: today,
     name: '',
     email: '',
     phone: '',
@@ -34,7 +36,6 @@ const CustomerForm = (props) => {
     address: '',
     city: '',
     avatar: '',
-    
     notes: '',
     source: 0,
   });
@@ -42,6 +43,7 @@ const CustomerForm = (props) => {
   const clearForm = () => {
     setFormData({
       id: null,
+      birthDay: today,
       name: '',
       email: '',
       phone: '',
@@ -49,7 +51,6 @@ const CustomerForm = (props) => {
       address: '',
       city: '',
       avatar: '',
-      
       source: 0,
     });
   };
@@ -64,6 +65,7 @@ const CustomerForm = (props) => {
     if (customer && id) {
       setFormData({
         id: customer._id,
+        birthDay: new Date(customer.birthDay).toISOString().substring(0, 10),
         name: customer.name,
         email: customer.email,
         phone: customer.phone,
@@ -71,7 +73,6 @@ const CustomerForm = (props) => {
         address: customer.address,
         city: customer.city,
         avatar: customer.avatar,
-        
         notes: customer.notes,
         source: customer.source,
       });
@@ -82,6 +83,11 @@ const CustomerForm = (props) => {
 
   const validation = () => {
     let isValid = true;
+    //Date Validation
+    if (formData.birthDay.length === 0) {
+      setFeedback('Please enter a date');
+      isValid = false;
+    }
 
     if (formData.phone.length < 3) {
       setFeedback(t('phone_is_required'));
@@ -324,7 +330,27 @@ const CustomerForm = (props) => {
             />
           </div>
         </div>
-
+        <div className="w-full sm:w-1/3 px-2 mb-4 sm:mb-0">
+          <label
+            htmlFor="date"
+            className="block text-sm dark:text-gray-200 text-gray-600 mb-2"
+          >
+            {t('Date de naissance')}{' '}
+            <span className="text-red-600 ml-2">*</span>
+          </label>
+          <input
+            id="date"
+            name="date"
+            type="date"
+            required
+            className="w-full py-3 px-4 bg-slate-100 focus:outline-none rounded-none"
+            value={formData.date}
+            onChange={(event) => {
+              setFormData({ ...formData, date: event.target.value });
+              setFeedback('');
+            }}
+          />
+        </div>
         <div className="mt-10 mb-4 flex justify-center items-center">
           <button
             className="w-auto sm:w-48 mx-3 py-3 px-4 sm:px-6 text-sm rounded-md text-white font-bold focus:outline-none"

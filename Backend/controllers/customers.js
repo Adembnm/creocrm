@@ -60,7 +60,7 @@ export const getCustomersStatistics = async (req, res) => {
   try {
     // Count Total & Active Customers
     const total = await Customer.countDocuments();
-  
+
     // Response
     res.status(200).json({ total });
   } catch (error) {
@@ -84,7 +84,7 @@ export const getCustomer = async (req, res) => {
   try {
     // Get Customer by Id
     const customer = await Customer.findById(req.params.id);
-    
+
     // Get customer's orders
     const orders = await Order.find({ customer: customer._id });
     // Get customer's payments
@@ -93,7 +93,7 @@ export const getCustomer = async (req, res) => {
     const result = {
       ...customer.toObject(),
       paid: payments.reduce((acc, payment) => parseFloat(acc) + parseFloat(payment.amount), 0),
-      
+
       orders,
       payments,
     }
@@ -121,10 +121,10 @@ export const addCustomer = async (req, res) => {
       history: [{
         date: new Date(),
         action: 'add',
-        user: connectedUser._id,        
+        user: connectedUser._id,
       }]
     });
-    
+
     // Response
     res.status(201).json(customer);
   } catch (error) {
@@ -147,11 +147,12 @@ export const editCustomer = async (req, res) => {
     if (!oldCustomer) return res.status(404).json({ message: "Customer not found" });
     // History Creation
     let updatedCustomer = {
-      ...newCustomer, history: [...oldCustomer.history, {
+      ...newCustomer,
+      history: [...oldCustomer.history, {
         date: new Date(),
         action: 'edit',
         user: connectedUser._id,
-        
+
       }]
     };
 
