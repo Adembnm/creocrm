@@ -344,9 +344,9 @@ const CustomerForm = (props) => {
             type="date"
             required
             className="w-full py-3 px-4 bg-slate-100 focus:outline-none rounded-none"
-            value={formData.date}
+            value={formData.birthDay}
             onChange={(event) => {
-              setFormData({ ...formData, date: event.target.value });
+              setFormData({ ...formData, birthDay: event.target.value });
               setFeedback('');
             }}
           />
