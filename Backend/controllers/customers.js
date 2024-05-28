@@ -193,7 +193,7 @@ export const deleteCustomer = async (req, res) => {
 export const getCustomersListNames = async (req, res) => {
   try {
     // Get Customers List 
-    const customers = await Customer.find({}).select('name');
+    const customers = await Customer.find({}).select('name').select('birthDay');
     // Response
     res.status(200).json(customers);
   } catch (error) {
